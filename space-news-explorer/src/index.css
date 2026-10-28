@@ -1,125 +1,35 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
 @import "tailwindcss";
 
-/* ---------- Design tokens ---------- */
-@theme {
-  --color-space-950: #05060f;
-  --color-space-900: #0a0d1f;
-  --color-space-800: #11152e;
-  --color-space-700: #1b2040;
-  --color-space-600: #2a3160;
-
-  --color-nebula-400: #a78bfa; /* violet */
-  --color-nebula-500: #8b5cf6;
-  --color-nebula-600: #7c3aed;
-
-  --color-aurora-400: #22d3ee; /* cyan */
-  --color-aurora-500: #06b6d4;
-
-  --color-ember-400: #fb923c; /* warm highlight */
-
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", "Inter", sans-serif;
-
-  --animate-fade-up: fade-up 0.5s ease-out both;
-  --animate-twinkle: twinkle 4s ease-in-out infinite;
-
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.4; }
-    50%      { opacity: 1; }
-  }
-}
-
-/* ---------- Base ---------- */
-html {
+:root {
   color-scheme: dark;
-  scroll-behavior: smooth;
 }
 
 body {
-  min-height: 100vh;
-  font-family: var(--font-sans);
-  color: #e2e8f0;
-  background-color: var(--color-space-950);
-  background-image:
-    radial-gradient(ellipse 80% 50% at 20% -10%, rgb(139 92 246 / 0.25), transparent),
-    radial-gradient(ellipse 60% 40% at 90% 10%, rgb(34 211 238 / 0.15), transparent),
-    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
-    radial-gradient(1px 1px at 70% 60%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 40% 80%, #cbd5e1, transparent),
-    radial-gradient(1px 1px at 85% 25%, #fff, transparent);
-  background-attachment: fixed;
+  background-color: #020617; /* almost pure black */
+  color: #f1f5f9;
 }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  letter-spacing: -0.02em;
-}
-
-::selection {
-  background: var(--color-nebula-500);
-  color: white;
-}
-
-:focus-visible {
-  outline: 2px solid var(--color-aurora-400);
-  outline-offset: 2px;
-  border-radius: 6px;
-}
-
-/* ---------- Reusable utilities ---------- */
-@utility glass {
-  background: rgb(17 21 46 / 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgb(255 255 255 / 0.08);
-  box-shadow: 0 8px 32px rgb(0 0 0 / 0.35);
-}
-
-@utility text-gradient {
-  background: linear-gradient(90deg, var(--color-nebula-400), var(--color-aurora-400));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@utility glow-hover {
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-  &:hover {
-    transform: translateY(-4px);
-    border-color: rgb(139 92 246 / 0.5);
-    box-shadow: 0 12px 40px rgb(139 92 246 / 0.25);
-  }
-}
-
-/* ---------- Scrollbar ---------- */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-space-600) transparent;
-}
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-space-950);
+  background: #020617;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--color-nebula-600), var(--color-aurora-500));
-  border-radius: 999px;
-  border: 2px solid var(--color-space-950);
+  background: #1e293b;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(var(--color-nebula-400), var(--color-aurora-400));
+  background: #334155;
 }
 
-/* ---------- Accessibility ---------- */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+/* Smooth fade-in for cards */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
 }

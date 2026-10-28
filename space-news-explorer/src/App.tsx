@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
 import { Tabs } from './components/Tabs';
 import { NewsCard } from './components/NewsCard';
+import { FeaturedSlider } from './components/FeaturedSlider';
 import { SkeletonCard } from './components/SkeletonCard';
 import { ErrorState } from './components/ErrorState';
 import { EmptyState } from './components/EmptyState';
@@ -21,28 +22,36 @@ function App() {
     useNews({ type: activeTab, search: debouncedSearch });
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      {/* Sticky header area */}
-      <div className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
-        <div className="max-w-6xl mx-auto px-4 py-6">
+    <div className="min-h-screen bg-[#020617] text-slate-100">
+      {/* Sticky header */}
+      <div className="sticky top-0 z-40 bg-[#020617]/85 backdrop-blur-xl border-b border-slate-800/80">
+        <div className="max-w-6xl mx-auto px-4 py-5">
           <Header />
-          <SearchBar value={searchInput} onChange={setSearchInput} />
-          <Tabs active={activeTab} onChange={setActiveTab} />
+          <div className="mt-5">
+            <SearchBar value={searchInput} onChange={setSearchInput} />
+          </div>
+          <div className="mt-5">
+            <Tabs active={activeTab} onChange={setActiveTab} />
+          </div>
         </div>
       </div>
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        {/* Showing count */}
+        {/* Featured Slider - only show when not searching and not loading */}
+        {!loading && !error && !debouncedSearch && items.length > 0 && (
+          <FeaturedSlider items={items} />
+        )}
+
+        {/* Count */}
         {!loading && !error && items.length > 0 && (
           <p className="text-sm text-slate-500 mb-6">
-            Showing {items.length} of {totalCount.toLocaleString()}
+            Showing <span className="text-slate-300">{items.length}</span> of{' '}
+            <span className="text-slate-300">{totalCount.toLocaleString()}</span>
           </p>
         )}
 
-        {/* Error */}
         {error && <ErrorState message={error} onRetry={refetch} />}
 
-        {/* Loading skeletons */}
         {loading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -51,10 +60,8 @@ function App() {
           </div>
         )}
 
-        {/* Empty */}
         {!loading && !error && items.length === 0 && <EmptyState />}
 
-        {/* Cards */}
         {!loading && !error && items.length > 0 && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -63,15 +70,14 @@ function App() {
               ))}
             </div>
 
-            {/* Load more */}
             {nextUrl && (
-              <div className="mt-10 text-center">
+              <div className="mt-12 text-center">
                 {loadingMore ? (
                   <LoadingSpinner />
                 ) : (
                   <button
                     onClick={loadMore}
-                    className="px-8 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl font-medium transition"
+                    className="px-8 py-3 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl font-medium transition-all hover:border-cyan-500/50"
                   >
                     Load more
                   </button>

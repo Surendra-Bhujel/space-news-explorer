@@ -5,8 +5,7 @@ interface NewsCardProps {
 }
 
 function formatDate(dateString: string) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-GB', {
+  return new Date(dateString).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
@@ -19,9 +18,9 @@ export function NewsCard({ item }: NewsCardProps) {
       href={item.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group block bg-slate-800/60 border border-slate-700/50 rounded-2xl overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300"
+      className="group block bg-slate-900/70 border border-slate-800 rounded-2xl overflow-hidden hover:-translate-y-1.5 hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300 animate-fade-in"
     >
-      <div className="aspect-[16/10] overflow-hidden bg-slate-900">
+      <div className="aspect-[16/10] overflow-hidden bg-slate-950">
         <img
           src={item.image_url}
           alt={item.title}
@@ -35,7 +34,7 @@ export function NewsCard({ item }: NewsCardProps) {
 
       <div className="p-5">
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-cyan-500/15 text-cyan-400">
+          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
             {item.news_site}
           </span>
           <span className="text-xs text-slate-500">{formatDate(item.published_at)}</span>
@@ -45,7 +44,9 @@ export function NewsCard({ item }: NewsCardProps) {
           {item.title}
         </h3>
 
-        <p className="mt-2 text-sm text-slate-400 line-clamp-3">{item.summary}</p>
+        <p className="mt-2 text-sm text-slate-400 line-clamp-3 leading-relaxed">
+          {item.summary}
+        </p>
       </div>
     </a>
   );
